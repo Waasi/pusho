@@ -1,18 +1,63 @@
 # Pusho
 
-To start your Phoenix server:
+An Open Source Language Agnostic Push Notification Service
 
-  * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server`
+**Note: This is an Alpha Version not ready to be used in production.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+# Usage
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+### Subscribe a client to receive notifications
 
-## Learn more
+JS Example:
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+**Install `phoenix-socket` with npm like so: `npm install phoenix-socket`
+
+```JavaScript
+import { Socket } from "phoenix-socket";
+
+const clientFingerprint = 'watagata';
+let socket = new Socket("ws://localhost:4000/socket", {
+  logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
+});
+
+socket.connect({user_id: "123"});
+var chan = socket.channel(`notification:${clientFingerprint}`, {})
+chan.join();
+
+chan.on(`notification:${clientFingerprint}`, msg => {
+  // handle message here
+  console.log(msg);
+})
+```
+
+### Send Push Notifications
+
+To send a push notification to a client send
+an http post request to `http://localhost/api/notifications`
+with a payload with the following structure:
+
+```JavaScript
+{
+	"fingerprint": "watagata",
+	"payload": "Hack The Planet!"
+}
+```
+
+# Development Setup
+
+1. `git clone https://github.com/Waasi/pusho.git`
+2. `mix deps.get`
+3. `mix phx.server`
+
+# Tests
+
+1. `mix deps.get`
+2. `mix test`
+
+# Contributing
+
+1. Fork it ( https://github.com/[my-github-username]/pusho/fork )
+2. Create your feature branch (git checkout -b feature/my_new_feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request
