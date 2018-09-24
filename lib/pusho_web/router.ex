@@ -7,5 +7,7 @@ defmodule PushoWeb.Router do
 
   scope "/api", PushoWeb do
     pipe_through :api
+
+    resources "/notifications", NotificationController, only: [:create]
   end
 end
