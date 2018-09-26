@@ -7,8 +7,6 @@ config :pusho, PushoWeb.Endpoint,
   server: true,
   secret_key_base: System.get_env("SECRET_KEY")
 
-  cache_static_manifest: "priv/static/cache_manifest.json"
-
 config :logger, level: :info
 
 # ## SSL Support

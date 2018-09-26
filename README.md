@@ -1,8 +1,6 @@
 # Pusho
 
-An Open Source Language Agnostic Push Notification Service
-
-**Note: This is an Alpha Version not ready to be used in production.
+An Open Source, Language Agnostic and Fault-Tolerant Push Notification Service
 
 # Usage
 
@@ -24,7 +22,7 @@ socket.connect({user_id: "123"});
 var chan = socket.channel(`notification:${clientFingerprint}`, {})
 chan.join();
 
-chan.on(`notification:${clientFingerprint}`, msg => {
+chan.on(`notification:${clientFingerprint}`, { msg } => {
   // handle message here
   console.log(msg);
 })
