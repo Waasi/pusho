@@ -22,9 +22,17 @@ defmodule Pusho.Notification.Server do
     GenServer.cast(server, {:push, payload})
   end
 
+  def id(server) do
+    GenServer.call(server, :id)
+  end
+
   #####
   # Callbacks
   #####
+
+  def handle_call(:id, _from, state) do
+    {:reply, self(), state}
+  end
 
   def handle_cast({:push, payload}, %{fingerprint: fingerprint, channel: channel} = state) do
     send(channel, {:notify, fingerprint, payload})

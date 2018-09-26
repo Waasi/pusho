@@ -8,8 +8,12 @@ defmodule Pusho.Notification.Supervisor do
   end
 
   def start_child(fingerprint, channel) do
-    spec = %{id: Server, start: {Server, :start_link, [fingerprint, channel]}}
+    spec = %{id: fingerprint, start: {Server, :start_link, [fingerprint, channel]}}
     DynamicSupervisor.start_child(__MODULE__, spec)
+  end
+
+  def terminate_child(pid) do
+    DynamicSupervisor.terminate_child(__MODULE__, pid)
   end
 
   @impl true

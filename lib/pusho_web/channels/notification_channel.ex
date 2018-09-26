@@ -9,6 +9,7 @@ defmodule PushoWeb.NotificationChannel do
       |> String.to_atom()
       |> Notification.subscribe(self())
 
+      socket = assign(socket, :fingerprint, fingerprint)
       {:ok, socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -18,6 +19,14 @@ defmodule PushoWeb.NotificationChannel do
   def handle_info({:notify, fingerprint, payload}, socket) do
     push(socket, "notification:#{fingerprint}", %{msg: payload})
     {:noreply, socket}
+  end
+
+  def terminate({:shutdown, :closed}, %{assigns: %{fingerprint: fingerprint}}) do
+    fingerprint
+    |> String.to_atom()
+    |> Notification.unsubscribe()
+
+    {:shutdown, :left}
   end
 
   defp authorized?(_payload), do: true
