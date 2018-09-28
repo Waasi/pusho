@@ -12,7 +12,8 @@ defmodule PushoWeb.NotificationController do
         |> String.to_atom()
         |> Notification.push(payload)
 
-        json(conn, body)
+        response_body = Map.drop(body, ["signature"])
+        json(conn, response_body)
       _invalid_body ->
         json(conn, %{error: "fingerprint and payload must be provided"})
     end

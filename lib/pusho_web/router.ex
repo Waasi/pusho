@@ -3,6 +3,7 @@ defmodule PushoWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug PushoWeb.Plugs.Auth, [api_key: System.get_env("PUSHO_API_KEY")]
   end
 
   scope "/api", PushoWeb do
