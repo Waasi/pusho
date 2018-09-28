@@ -2,6 +2,26 @@
 
 An Open Source, Language Agnostic and Fault-Tolerant Push Notification Service
 
+# Configuration
+
+For security reasons Pusho requires the definition of an API Key
+as an environment variable for the key: `PUSHO_API_KEY`
+
+Pusho ships with an API Key Generator task that can be invoked as:
+
+```shell
+> mix generate.key 64
+
+Generateed API Key
+==================
+
+<api_key_will_be_around_here>
+
+> export PUSHO_API_KEY=<generated_api_key>
+```
+
+The suggested length is 64 but any other integer value can be used.
+
 # Usage
 
 ### Subscribe a client to receive notifications
@@ -37,9 +57,13 @@ with a payload with the following structure:
 ```JavaScript
 {
 	"fingerprint": "watagata",
-	"payload": "Hack The Planet!"
+	"payload": "Hack The Planet!",
+  "signature": "calculated_signature_goes_here"
 }
 ```
+
+A signature property should be appended to the payload calculated
+with the generated api key using an hmac sha256 function on the payload.
 
 # Development Setup
 
