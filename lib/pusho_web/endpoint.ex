@@ -26,6 +26,7 @@ defmodule PushoWeb.Endpoint do
     key: "_pusho_key",
     signing_salt: "9PG7sQld"
 
+  plug CORSPlug
   plug PushoWeb.Router
 
   @doc """

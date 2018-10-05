@@ -36,6 +36,7 @@ defmodule Pusho.Mixfile do
       {:phoenix_pubsub, "~> 1.0"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
+      {:cors_plug, "~> 1.5"},
       {:distillery, "~> 2.0"}
     ]
   end

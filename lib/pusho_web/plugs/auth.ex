@@ -29,6 +29,6 @@ defmodule PushoWeb.Plugs.Auth do
   defp sign(body, key) do
     :sha256
     |> :crypto.hmac(key, body)
-    |> Base.encode16()
+    |> Base.encode16(case: :lower)
   end
 end
