@@ -24,46 +24,11 @@ The suggested length is 64 but any other integer value can be used.
 
 # Usage
 
-### Subscribe a client to receive notifications
+To Consume the Service you can use the following client libraries:
 
-JS Example:
-
-**Install `phoenix-socket` with npm like so: `npm install phoenix-socket`
-
-```JavaScript
-import { Socket } from "phoenix-socket";
-
-const clientFingerprint = 'watagata';
-let socket = new Socket("ws://localhost:4000/socket", {
-  logger: ((kind, msg, data) => { console.log(`${kind}: ${msg}`, data) })
-});
-
-socket.connect({user_id: "123"});
-var chan = socket.channel(`notification:${clientFingerprint}`, {})
-chan.join();
-
-chan.on(`notification:${clientFingerprint}`, { msg } => {
-  // handle message here
-  console.log(msg);
-})
-```
-
-### Send Push Notifications
-
-To send a push notification to a client send
-an http post request to `http://localhost/api/notifications`
-with a payload with the following structure:
-
-```JavaScript
-{
-	"fingerprint": "watagata",
-	"payload": "Hack The Planet!",
-  "signature": "calculated_signature_goes_here"
-}
-```
-
-A signature property should be appended to the payload calculated
-with the generated api key using an hmac sha256 function on the payload.
+- JavaScript => [Pusho JS](https://github.com/Waasi/pusho-js)
+- Ruby => Comming Soon
+- Python => Comming Soon
 
 # Development Setup
 
